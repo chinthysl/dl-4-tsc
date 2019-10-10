@@ -9,7 +9,15 @@ from utils.utils import viz_cam
 
 import numpy as np
 import sys
-import sklearn 
+import sklearn
+
+from keras.backend.tensorflow_backend import set_session
+import tensorflow as tf
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+# config.log_device_placement = True  # to log device placement (on which device the operation ran)
+sess = tf.Session(config=config)
+set_session(sess)  # set this TensorFlow session as the default session for Keras
 
 def fit_classifier(): 
     x_train = datasets_dict[dataset_name][0]
