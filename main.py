@@ -36,7 +36,8 @@ def fit_classifier():
         x_test = x_test.reshape((x_test.shape[0],x_test.shape[1],1))
 
     input_shape = x_train.shape[1:]
-    classifier = create_classifier(classifier_name,input_shape, nb_classes, output_directory)
+    print(output_directory)
+    classifier = create_classifier(classifier_name,input_shape, nb_classes, output_directory, True)
 
     classifier.fit(x_train,y_train,x_test,y_test, y_true)
 
@@ -73,7 +74,7 @@ def create_classifier(classifier_name, input_shape, nb_classes, output_directory
 
 # change this directory for your machine
 # it should contain the archive folder containing both univariate and multivariate archives
-root_dir = '/mnt/nfs/casimir/'
+root_dir = './data/'
 
 if sys.argv[1]=='transform_mts_to_ucr_format':
     transform_mts_to_ucr_format()
@@ -99,19 +100,29 @@ else:
     output_directory = root_dir+'/results/'+classifier_name+'/'+archive_name+itr+'/'+\
         dataset_name+'/'
 
-    output_directory = create_directory(output_directory)
+    # output_directory = create_directory(output_directory)
+    create_directory(output_directory)
 
     print('Method: ',archive_name, dataset_name, classifier_name, itr)
 
-    if output_directory is None: 
-        print('Already done')
-    else: 
+    # if output_directory is None:
+    #     print('Already done')
+    # else:
+    #
+    #     datasets_dict = read_dataset(root_dir,archive_name,dataset_name)
+    #
+    #     fit_classifier()
+    #
+    #     print('DONE')
+    #
+    #     # the creation of this directory means
+    #     create_directory(output_directory+'/DONE')
 
-        datasets_dict = read_dataset(root_dir,archive_name,dataset_name)
+    datasets_dict = read_dataset(root_dir, archive_name, dataset_name)
 
-        fit_classifier()
+    fit_classifier()
 
-        print('DONE')
+    print('DONE')
 
-        # the creation of this directory means
-        create_directory(output_directory+'/DONE')
+    # the creation of this directory means
+    create_directory(output_directory + '/DONE')
